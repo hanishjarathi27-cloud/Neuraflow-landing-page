@@ -971,16 +971,21 @@
           <svg width="22" height="22" viewBox="0 0 22 22" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/><path d="M8 10h6M8 13h4"/></svg>
         </div>
         <div class="feat-tag">Most Popular</div>
-
-<h3 class="feat-title" style="margin-top:20px;">
-    AI Customer Support
-</h3>
+        <h3 class="feat-title">AI Customer Support</h3>
         <p class="feat-desc">Resolve tickets instantly across email, chat, and social — with human-like empathy and zero wait times. Handles escalations, refunds, and FAQs autonomously.</p>
         <div class="feat-metrics">
-          <div class="feat-metric"><span class="feat-metric-val">2.3s</span><span class="feat-metric-lbl">Avg. Response</span></div>
-          <div class="feat-metric-div"></div>
-          <div class="feat-metric"><span class="feat-metric-val">94%</span><span class="feat-metric-lbl">Auto-Resolution</span></div>
-        </div>
+          <div class="feat-metric">
+  <span class="feat-metric-val">
+    2.3<span class="metric-unit">s</span>
+  </span>
+  <span class="feat-metric-lbl">Avg. Response</span>
+</div>
+          <div class="feat-metric">
+  <span class="feat-metric-val">
+    94<span class="metric-unit">%</span>
+  </span>
+  <span class="feat-metric-lbl">Auto-Resolution</span>
+</div>
         <div class="feat-visual">
           <div class="chat-bubble user">Hi, I haven't received my order yet 📦</div>
           <div class="chat-bubble ai">
@@ -1397,10 +1402,11 @@
   margin-bottom: 18px;
   flex-shrink: 0;
 }
-
 .feat-tag {
-  position: absolute;
-  top: 5px; right: 20px;
+  position: relative;
+  display: inline-block;
+  margin-bottom: 10px;
+
   font-size: .68rem;
   font-weight: 600;
   color: #86efac;
@@ -1467,6 +1473,9 @@
   align-items: flex-start;
   gap: 8px;
 }
+  .chat-bubble.ai strong {
+  display: inline;
+}
 .ai-dot {
   width: 7px; height: 7px;
   background: var(--purple-1);
@@ -1499,8 +1508,25 @@
 .wf-arrow { color: var(--text-3); font-size: .9rem; }
 
 /* BI chart */
-.bi-chart { margin-top: 22px; position: relative; }
-.bi-bar-group { display: flex; align-items: flex-end; gap: 6px; height: 70px; }
+.bi-chart {
+  margin-top: 22px;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.bi-bar-group {
+  display: flex;
+  align-items: flex-end;
+  gap: 6px;
+  height: 70px;
+  position: relative;   /* establishes stacking context for the trend line */
+  overflow: hidden;     /* clips the SVG line within the bar area only */
+  border-radius: 4px;
+  padding-bottom: 4px;  /* lifts bars off the floor */
+}
+
 .bi-bar {
   flex: 1;
   height: var(--h);
@@ -1508,17 +1534,29 @@
   border-radius: 4px 4px 0 0;
   animation: grow-spark .8s ease both;
 }
-.bi-trend-line { position: absolute; inset: 0 0 15px; pointer-events: none; }
-.bi-trend-line svg { width: 100%; height: 100%; }
+
+.bi-trend-line {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+  pointer-events: none;
+}
+
+.bi-trend-line svg {
+  width: 100%;
+  height: 100%;
+}
+
 .bi-insight-pill {
-  margin-top: 20px;
+  display: block;       /* was inline-block, causing float-like overlap */
+  position: static;     /* ensure it sits in normal flow, below the bars */
+  margin-top: 0;        /* gap on .bi-chart handles spacing now */
   font-size: .75rem;
   color: #86efac;
   background: rgba(34,197,94,.08);
   border: 1px solid rgba(34,197,94,.2);
   padding: 5px 12px;
   border-radius: 8px;
-  display: inline-block;
 }
 
 /* lead feed */
